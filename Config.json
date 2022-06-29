@@ -1,0 +1,25 @@
+{
+"Configuracion": {
+                  "Video": {
+                  "source": "Video",
+                  "extencion": [".mp4",".mov", ".wmv", ".avi", ".avchd", ".flv", ".f4v", ".swf", ".webm", ".html5"]
+                  },
+                  "Documentos": {
+                  "source" : "Documentos",
+                  "extencion": [".txt", ".doc", ".docx", ".docm", ".odt", ".xlsx", ".xlsm", ".xlsb", ".xltx"]
+                  },
+                  "Imagenes": {
+                  "source": "Imagenes",
+                  "extencion": [".bmp", ".gif", ".jpg", ".tif", ".png"]
+                  },
+                  "Programas": {
+                  "source": "Programas",
+                  "extencion": [".exe"]
+                  }
+                },
+  "Aplicacion": {
+                  "enMovimiento": false,
+                  "actualizacion": 240
+  }
+
+}
