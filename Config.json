@@ -10,7 +10,15 @@
                   },
                   "Imagenes": {
                   "source": "Imagenes",
-                  "extencion": [".bmp", ".gif", ".jpg", ".tif", ".png"]
+                  "extencion": [".bmp", ".gif", ".jpg", ".tif", ".png" ,".jpeg"]
+                  },
+                  "Sonidos": {
+                  "source": "Sonidos",
+                  "extencion": [".mp3", ".wav"]
+                  },
+                  "Comprimidos": {
+                  "source": "Comprimidos",
+                  "extencion": [".zip", ".rar"]
                   },
                   "Programas": {
                   "source": "Programas",
@@ -19,7 +27,8 @@
                 },
   "Aplicacion": {
                   "enMovimiento": false,
-                  "actualizacion": 240
+                  "actualizacion": 1,
+                  "source_new": "C:\\Users\\mpino\\Downloads"
   }
 
 }

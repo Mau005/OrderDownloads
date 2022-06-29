@@ -14,17 +14,17 @@ def close():
 
 
 class ControlTime(Thread):
-    def __init__(self, daemon, contents, final):
+    def __init__(self, daemon, contents, final, sourceNew = None):
         super().__init__()
         self.currentPath = None
         self.contenidoPath = None
         self.contents = contents
+        self.sourceNew = sourceNew
         self.checkFiles()
         self.checkFileMove()
         self.initialTime = tm.time()
         self.daemon = daemon
         self.timeNow = 0
-
         self.finalTime = final
 
     def checkExtensions(self):
@@ -34,8 +34,12 @@ class ControlTime(Thread):
             for ext in extencion:
                 for element in self.contenidoPath:
                     if ext in element.lower():
-                        shutil.move(f"{self.currentPath}\{element}", f"{self.currentPath}\{pathMove}")
-            self.checkFiles()
+                        if not element.lower() == "orderdowloads.exe":
+                            if self.sourceNew is None:
+                                shutil.move(f"{self.currentPath}\{element}", f"{self.currentPath}\{pathMove}")
+                            else:
+                                shutil.move(f"{self.sourceNew}\{element}", f"{self.currentPath}\{pathMove}")
+                self.checkFiles()
 
     def checkFileMove(self):
         for files in self.contents.keys():
@@ -43,8 +47,12 @@ class ControlTime(Thread):
                 os.mkdir(f"{self.currentPath}\{self.contents[files]['source']}")
 
     def checkFiles(self):
-        self.contenidoPath = os.listdir()
+        if self.sourceNew is None:
+            self.contenidoPath = os.listdir()
+        else:
+            self.contenidoPath = os.listdir(self.sourceNew)
         self.currentPath = os.getcwd()
+
 
     def initProgam(self):
         self.checkFileMove()
@@ -71,14 +79,16 @@ class OrderDowloads:
         self.contents = json.load(open("Config.json", encoding="utf-8"))
         self.enMovements = self.contents["Aplicacion"]["enMovimiento"]
         self.finalTime = self.contents["Aplicacion"]["actualizacion"]
+        self.sourceNew = self.contents["Aplicacion"]["source_new"]
         self.daemon[0] = self.enMovements
-        self.controltime = ControlTime(self.daemon, self.contents["Configuracion"], self.finalTime)
+
+        if len(self.sourceNew) >= 1:
+            self.controltime = ControlTime(self.daemon, self.contents["Configuracion"], self.finalTime, sourceNew=self.sourceNew)
+        else:
+            self.controltime = ControlTime(self.daemon, self.contents["Configuracion"], self.finalTime)
 
     def run(self):
         self.controltime.start()
-        while self.daemon[0]:
-            print(self.controltime.timeNow)
-        close()
 
 
 if __name__ == "__main__":
