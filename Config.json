@@ -6,7 +6,7 @@
                   },
                   "Documentos": {
                   "source" : "Documentos",
-                  "extencion": [".txt", ".doc", ".docx", ".docm", ".odt", ".xlsx", ".xlsm", ".xlsb", ".xltx"]
+                  "extencion": [".txt", ".doc", ".docx", ".docm", ".odt", ".xlsx", ".xlsm", ".xlsb", ".xltx", ".pdf"]
                   },
                   "Imagenes": {
                   "source": "Imagenes",
@@ -20,6 +20,14 @@
                   "source": "Comprimidos",
                   "extencion": [".zip", ".rar"]
                   },
+                  "ImagenISO": {
+                  "source": "ImagenISO",
+                  "extencion": [".dmg", ".iso"]
+                  },
+                  "Otros": {
+                  "source": "Otros",
+                  "extencion": [".jar", ".sql", ".py"]
+                  },
                   "Programas": {
                   "source": "Programas",
                   "extencion": [".exe"]
@@ -28,7 +36,7 @@
   "Aplicacion": {
                   "enMovimiento": false,
                   "actualizacion": 1,
-                  "source_new": "C:\\Users\\mpino\\Downloads"
+                  "source_new": "/Users/administrador/Downloads"
   }
 
 }
