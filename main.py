@@ -1,5 +1,5 @@
 from pystray import Icon, Menu, MenuItem
-import subprocess, webbrowser, platform
+import subprocess, platform
 from PIL import Image
 import json
 from threading import Thread
@@ -32,8 +32,8 @@ class ControlTiempo(Thread):
 
     def revisarCarpetas(self):
         for carpetas in self.contenido.keys():
-            if not os.path.exists(f"{self.rutaActual}/{self.contenido[carpetas]['source']}"):
-                os.mkdir(f"{self.rutaActual}/{self.contenido[carpetas]['source']}")
+            if not os.path.exists(f"{self.rutaActual}\\{self.contenido[carpetas]['source']}"):
+                os.mkdir(f"{self.rutaActual}\\{self.contenido[carpetas]['source']}")
 
     def revisarExtenciones(self):
         for carpetas in self.contenido.keys():
@@ -44,9 +44,9 @@ class ControlTiempo(Thread):
                 for elementos in self.contenidoPath:
                     if ext in elementos.lower() and not elementos.lower() == "orderdowloads.exe":
                         if self.rutaNueva is None:
-                            shutil.move(f"{self.rutaActual}/{elementos}", f"{self.rutaActual}/{rutaMover}")
+                            shutil.move(f"{self.rutaActual}\\{elementos}", f"{self.rutaActual}\\{rutaMover}")
                         else:
-                            shutil.move(f"{self.rutaNueva}/{elementos}", f"{self.rutaActual}/{rutaMover}")
+                            shutil.move(f"{self.rutaNueva}\\{elementos}", f"{self.rutaActual}\\{rutaMover}")
                 self.revisandoRutas()
 
     def iniciar(self):
