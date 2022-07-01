@@ -34,8 +34,8 @@
                   }
                 },
   "Aplicacion": {
-                  "enMovimiento": false,
-                  "actualizacion": 240,
+                  "enMovimiento": true,
+                  "actualizacion": 0.5,
                   "source_new": "C:\\Users\\mpino\\Downloads"
   }
 

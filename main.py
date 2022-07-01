@@ -4,6 +4,7 @@ import platform
 import shutil
 import subprocess
 import time
+import sys
 import time as tm
 import webbrowser
 from threading import Thread
@@ -23,9 +24,8 @@ class ControlTiempo(Thread):
         self.contenidoPath = None
         self.rutaActual = None
         self.revisandoRutas()
+        self.tiempoActual = tm.time()
 
-        self.inicioTiempo = tm.time()
-        self.tiempoActual = 0
 
     def revisandoRutas(self):
         if self.rutaNueva is None:
@@ -57,15 +57,20 @@ class ControlTiempo(Thread):
         self.revisandoRutas()
         self.revisarCarpetas()
         self.revisarExtenciones()
-        self.inicioTiempo = tm.time()
         self.icon.notify("Se han guardado todos los elementos", "Aviso de Ejecución")
+
 
     def run(self):
         self.iniciar()
         while self.controlHilos[0]:
+            tiempoTranscurrido = tm.time()
+            tiempo = tiempoTranscurrido - self.tiempoActual
+            print(f"TIempo es: {tiempo}")
+            if tiempo >= 60 * self.tiempoActualizar:
+                self.tiempoActual = tm.time()
+                self.iniciar()
+            time.sleep(5)
 
-            time.sleep(60 * self.tiempoActualizar)
-            self.iniciar()
 
 class OrderDowloads():
     def __init__(self):
@@ -100,7 +105,7 @@ class OrderDowloads():
             self.controlTiempo = ControlTiempo(self.icon, self.controlHilos, self.contenido["Configuracion"],
                                                self.tiempoActualizar)
     def configurar(self):
-        not self.icon.notify("Aun no esta completo este modulo, por favor modifica en el contendor el archivo 'Config.json'", "Error de inicio de Bloque")
+        self.icon.notify("Aun no esta completo este modulo, por favor modifica en el contendor el archivo 'Config.json'", "Error de inicio de Bloque")
 
     def abrirProgramas(self):
         self.abrirArchivo("Programas")
@@ -151,6 +156,8 @@ class OrderDowloads():
         self.icon.notify("Se ha cerrado la aplicaciòn Vuelve pronto", "Salida")
         self.icon.stop()
 
+
+
     def iniciar(self):
         self.controlTiempo.start()
         self.icon.notify("Se iniciado OrderDowloads Correctamente", "Mensaje de Inicio")
@@ -160,3 +167,4 @@ class OrderDowloads():
 if __name__ == "__main__":
     app = OrderDowloads()
     app.iniciar()
+

@@ -31,7 +31,7 @@ extencion is support for file in file
 "source_new": "C:\\Users\\mpino\\Downloads"
 ```
 # releases:
-- https://github.com/Mau005/OrderDownloads/releases/tag/0.1
+- https://github.com/Mau005/OrderDownloads/releases
 # Channels
 - https://www.youtube.com/maugame
 - https://www.twitch.tv/maugameofficial
