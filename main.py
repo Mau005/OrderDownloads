@@ -3,6 +3,7 @@ import os
 import platform
 import shutil
 import subprocess
+import time
 import time as tm
 import webbrowser
 from threading import Thread
@@ -62,15 +63,15 @@ class ControlTiempo(Thread):
     def run(self):
         self.iniciar()
         while self.controlHilos[0]:
-            tiempoTranscurrido = tm.time()
-            self.tiempoActual = int(tiempoTranscurrido - self.inicioTiempo)
-            if self.tiempoActual >= 60 * self.tiempoActualizar:
-                self.iniciar()
 
+            time.sleep(60 * self.tiempoActualizar)
+            self.iniciar()
 
 class OrderDowloads():
     def __init__(self):
-        self.contenido = json.load(open("Config.json", encoding="utf-8"))
+        archivo = open("Config.json", encoding="utf-8")
+        self.contenido = json.load(archivo)
+        archivo.close()
         self.controlHilos = [self.contenido["Aplicacion"]["enMovimiento"], ]
         self.tiempoActualizar = self.contenido["Aplicacion"]["actualizacion"]
         self.rutaNueva = self.contenido["Aplicacion"]["source_new"]
