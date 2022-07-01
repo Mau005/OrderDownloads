@@ -8,14 +8,22 @@ Esta aplicacion esta diseñada para ordenar carpetas con mucho contenido, por ej
 - Pillow~=9.1.1
 
 ## Imagenes:
+- En esta parte estara el programa
 
-https://ibb.co/RNX2n23
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/dtNB9BP/1.png" alt="1" border="0"></a>
 
-https://ibb.co/ZKWmFjk
+- Estas son las opciones que tiene
 
-https://ibb.co/VTV7QNb
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/pZJyM79/2.png" alt="2" border="0"></a>
 
-https://ibb.co/GFjP6n8
+- Puedes abrir directamente el contenedor de las carpetas
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/KW6MLGB/3.png" alt="3" border="0"></a>
+
+- Te enviare una notificación informando que se ejecuto
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/8XV8CNf/4.png" alt="4" border="0"></a>
+
 ## Configuración
 Abre el contenedor de donde se encuentra el programa y modifica la Config.json
 
