@@ -7,6 +7,15 @@ Esta aplicacion esta diseñada para ordenar carpetas con mucho contenido, por ej
 - pystray~=0.19.4
 - Pillow~=9.1.1
 
+## Imagenes:
+
+https://ibb.co/RNX2n23
+
+https://ibb.co/ZKWmFjk
+
+https://ibb.co/VTV7QNb
+
+https://ibb.co/GFjP6n8
 ## Configuración
 Abre el contenedor de donde se encuentra el programa y modifica la Config.json
 
