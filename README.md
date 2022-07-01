@@ -1,18 +1,18 @@
 # OrderDownloads
-This application is used to be able to auto-save the downloads and it will run from time to time
+Esta aplicacion esta diseñada para ordenar carpetas con mucho contenido, por ejemplo las descargas
 
-## Requeriments
+## Requerimientos
 
 - python 3x
+- pystray~=0.19.4
+- Pillow~=9.1.1
 
+## Configuración
+Abre el contenedor de donde se encuentra el programa y modifica la Config.json
 
-## Config
-open Configuration.json
-this file is designed to be able to configure everything you need to move your files between directories
-
-"Video": is keys 
-source is path move file
-extencion is support for file in file
+"Video": son las llaves 
+source la carpeta donde se movera
+extencion las extenciones que se agregaran
 ```
 "Video": {
 "source": "Video",
@@ -20,11 +20,11 @@ extencion is support for file in file
 },
 ```
 
-- EnMovimiento: it is used for the application to enter an infinite loop controlled by an update control
+- EnMovimiento: se utiliza para que el programa corra en un bucle revisando cada cierto tiempo
 
-- actualizacion:  is used to determine every how many minutes it will look for the content and update the code
+- actualizacion: cantidad de minutos que requiere el programa para revisar y ordenar los archivos
 
-- source_new:it is used to search for a specific path in another place that does not contain the project, for example the downloads folder
+- source_new: es la ruta donde quieres ir a buscar los archivos por ejemplo descargas
 ```
 "enMovimiento": false,
 "actualizacion": 1,

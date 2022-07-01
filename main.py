@@ -65,7 +65,8 @@ class ControlTiempo(Thread):
         while self.controlHilos[0]:
             tiempoTranscurrido = tm.time()
             tiempo = tiempoTranscurrido - self.tiempoActual
-            print(f"TIempo es: {tiempo}")
+            if not self.controlHilos[0]:
+                break
             if tiempo >= 60 * self.tiempoActualizar:
                 self.tiempoActual = tm.time()
                 self.iniciar()
