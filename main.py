@@ -1,17 +1,20 @@
-from pystray import Icon, Menu, MenuItem
-import subprocess, platform
-from PIL import Image
 import json
-from threading import Thread
 import os
+import platform
 import shutil
-import sys
+import subprocess
 import time as tm
+import webbrowser
+from threading import Thread
+
+from PIL import Image
+from pystray import Icon, Menu, MenuItem
 
 
 class ControlTiempo(Thread):
-    def __init__(self, controlHilos, contenido, tiempoActualizar, rutaNueva=None):
+    def __init__(self, icon, controlHilos, contenido, tiempoActualizar, rutaNueva=None):
         super().__init__()
+        self.icon = icon
         self.controlHilos = controlHilos
         self.contenido = contenido
         self.tiempoActualizar = tiempoActualizar
@@ -54,6 +57,7 @@ class ControlTiempo(Thread):
         self.revisarCarpetas()
         self.revisarExtenciones()
         self.inicioTiempo = tm.time()
+        self.icon.notify("Se han guardado todos los elementos", "Aviso de Ejecución")
 
     def run(self):
         self.iniciar()
@@ -66,42 +70,69 @@ class ControlTiempo(Thread):
 
 class OrderDowloads():
     def __init__(self):
-        self.controlHilos = [True, ]
         self.contenido = json.load(open("Config.json", encoding="utf-8"))
-        self.enMovimiento = self.contenido["Aplicacion"]["enMovimiento"]
+        self.controlHilos = [self.contenido["Aplicacion"]["enMovimiento"], ]
         self.tiempoActualizar = self.contenido["Aplicacion"]["actualizacion"]
         self.rutaNueva = self.contenido["Aplicacion"]["source_new"]
-
-        if len(self.rutaNueva) >= 1:
-            self.controlTiempo = ControlTiempo(self.controlHilos, self.contenido["Configuracion"], self.tiempoActualizar,
-                                               rutaNueva=self.rutaNueva)
-        else:
-            self.controlTiempo = ControlTiempo(self.controlHilos, self.contenido["Configuracion"], self.tiempoActualizar)
-
         self.icon = Icon("OrderDowloads", Image.open("icon.jpeg"), menu=Menu(
             MenuItem("Abrir", Menu(MenuItem("Abrir Contenedor", self.abrirContenedor),
                                    MenuItem("Abrir Documentos", self.abrirDocumentos),
-                                   MenuItem("Abrir Videos", self.abrirContenedor),
-                                   MenuItem("Abrir Imagenes", self.abrirContenedor),
-                                   MenuItem("Abrir Sonidos", self.abrirContenedor),
-                                   MenuItem("Abrir Comprimidos", self.abrirContenedor),
-                                   MenuItem("Abrir ImagenISO", self.abrirContenedor),
-                                   MenuItem("Abrir Programas", self.abrirContenedor),
+                                   MenuItem("Abrir Videos", self.abrirVideos),
+                                   MenuItem("Abrir Imagenes", self.abrirImagenes),
+                                   MenuItem("Abrir Sonidos", self.abrirSonidos),
+                                   MenuItem("Abrir Comprimidos", self.abrirComprimidos),
+                                   MenuItem("Abrir ImagenISO", self.abrirImagenISO),
+                                   MenuItem("Abrir Programas", self.abrirProgramas),
                                    MenuItem("Abrir Otros", self.abrirContenedor)
                                    )),
             MenuItem("Ejecutar Ahora", self.actualizar),
+            MenuItem("Configuración", self.configurar),
             MenuItem("Creditos", self.creditos),
             MenuItem("Salir", self.salir)
         ))
+
+        if len(self.rutaNueva) >= 1:
+            self.controlTiempo = ControlTiempo(self.icon, self.controlHilos, self.contenido["Configuracion"],
+                                               self.tiempoActualizar,
+                                               rutaNueva=self.rutaNueva)
+        else:
+            self.controlTiempo = ControlTiempo(self.icon, self.controlHilos, self.contenido["Configuracion"],
+                                               self.tiempoActualizar)
+    def configurar(self):
+        not self.icon.notify("Aun no esta completo este modulo, por favor modifica en el contendor el archivo 'Config.json'", "Error de inicio de Bloque")
+
+    def abrirProgramas(self):
+        self.abrirArchivo("Programas")
+
+    def abrirImagenISO(self):
+        self.abrirArchivo("ImagenISO")
+
+    def abrirSonidos(self):
+        self.abrirArchivo("Sonidos")
+
+    def abrirComprimidos(self):
+        self.abrirArchivo("Comprimidos")
+
+    def abrirImagenes(self):
+        self.abrirArchivo("Imagenes")
 
     def actualizar(self):
         self.controlTiempo.iniciar()
 
     def creditos(self):
-        self.icon.notify("Esta aplicacion fue echa por Mau", "Creditos: ")
+        self.icon.notify("Esta aplicación fue escrita por Mau005", "Creditos: ")
+        webbrowser.open("https://github.com/Mau005")
 
+    def abrirDocumentos(self):
+        self.abrirArchivo("Documentos")
 
-    def abrirArchivo(self, carpeta = None):
+    def abrirVideos(self):
+        self.abrirArchivo("Video")
+
+    def abrirContenedor(self):
+        self.abrirArchivo()
+
+    def abrirArchivo(self, carpeta=None):
         if carpeta is None:
             path = self.controlTiempo.rutaActual
         else:
@@ -114,12 +145,6 @@ class OrderDowloads():
         else:
             subprocess.Popen(["xdg-open", path])
 
-    def abrirDocumentos(self):
-        self.abrirArchivo("Documentos")
-
-    def abrirContenedor(self):
-        self.abrirArchivo()
-
     def salir(self):
         self.controlHilos[0] = False
         self.icon.notify("Se ha cerrado la aplicaciòn Vuelve pronto", "Salida")
@@ -129,6 +154,7 @@ class OrderDowloads():
         self.controlTiempo.start()
         self.icon.notify("Se iniciado OrderDowloads Correctamente", "Mensaje de Inicio")
         self.icon.run()
+
 
 if __name__ == "__main__":
     app = OrderDowloads()
